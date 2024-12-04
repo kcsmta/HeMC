@@ -1,7 +1,5 @@
-## Follow this [official repo](https://openfhe-development.readthedocs.io/en/latest/sphinx_rsts/intro/installation/linux.html).
-
-
-## Installation
+## Install OpenFHE
+Follow this [official repo](https://openfhe-development.readthedocs.io/en/latest/sphinx_rsts/intro/installation/linux.html).
 It is recommended to download and build the library in a partition with sufficient storage space.
 
 ### Install dependencies
@@ -21,7 +19,7 @@ $ sudo make install
 
 After running above commands, you can see the folder `openfhe` inside the folder `/usr/local/include/`, and `libOPENFHE[module].so.[version]` libraries in `/user/local/lib`. Once the `OpenFHE` installed, you can use the `OpenFHE` in your code.
 
-## Code
+## Code HeMC
 ### Step 1: Write CMakeLists.txt
 Use the `CMakeLists.txt` file for your project (modify appropriate information if needed).
 
