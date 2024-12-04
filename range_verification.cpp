@@ -1,6 +1,7 @@
 #define PROFILE
 
 #include "openfhe.h"
+#include "utils.h"
 
 using namespace lbcrypto;
 
@@ -47,70 +48,74 @@ int main() {
     // Encrypt the encoded vectors
     auto c = cc->Encrypt(keys.publicKey, ptxt);
 
-    // 
-    // Step 4: Evaluation
+    std::vector<double> random_vector = generateRandomVector(10, -1000, 1000);
 
-    // Homomorphic addition
-    auto cAdd = cc->EvalAdd(c1, c2);
+    printVector(random_vector);
 
-    // Homomorphic subtraction
-    auto cSub = cc->EvalSub(c1, c2);
+    // // 
+    // // Step 4: Evaluation
 
-    // Homomorphic scalar multiplication
-    auto cScalar = cc->EvalMult(c1, 4.0);
+    // // Homomorphic addition
+    // auto cAdd = cc->EvalAdd(c1, c2);
 
-    // Homomorphic multiplication
-    auto cMul = cc->EvalMult(c1, c2);
+    // // Homomorphic subtraction
+    // auto cSub = cc->EvalSub(c1, c2);
 
-    // Homomorphic rotations
-    auto cRot1 = cc->EvalRotate(c1, 1);
-    auto cRot2 = cc->EvalRotate(c1, -2);
+    // // Homomorphic scalar multiplication
+    // auto cScalar = cc->EvalMult(c1, 4.0);
 
-    // Step 5: Decryption and output
-    Plaintext result;
-    // We set the cout precision to 8 decimal digits for a nicer output.
-    // If you want to see the error/noise introduced by CKKS, bump it up
-    // to 15 and it should become visible.
-    std::cout.precision(8);
+    // // Homomorphic multiplication
+    // auto cMul = cc->EvalMult(c1, c2);
 
-    std::cout << std::endl << "Results of homomorphic computations: " << std::endl;
+    // // Homomorphic rotations
+    // auto cRot1 = cc->EvalRotate(c1, 1);
+    // auto cRot2 = cc->EvalRotate(c1, -2);
 
-    cc->Decrypt(keys.secretKey, c1, &result);
-    result->SetLength(batchSize);
-    std::cout << "x1 = " << result;
-    std::cout << "Estimated precision in bits: " << result->GetLogPrecision() << std::endl;
+    // // Step 5: Decryption and output
+    // Plaintext result;
+    // // We set the cout precision to 8 decimal digits for a nicer output.
+    // // If you want to see the error/noise introduced by CKKS, bump it up
+    // // to 15 and it should become visible.
+    // std::cout.precision(8);
 
-    // Decrypt the result of addition
-    cc->Decrypt(keys.secretKey, cAdd, &result);
-    result->SetLength(batchSize);
-    std::cout << "x1 + x2 = " << result;
-    std::cout << "Estimated precision in bits: " << result->GetLogPrecision() << std::endl;
+    // std::cout << std::endl << "Results of homomorphic computations: " << std::endl;
 
-    // Decrypt the result of subtraction
-    cc->Decrypt(keys.secretKey, cSub, &result);
-    result->SetLength(batchSize);
-    std::cout << "x1 - x2 = " << result << std::endl;
+    // cc->Decrypt(keys.secretKey, c1, &result);
+    // result->SetLength(batchSize);
+    // std::cout << "x1 = " << result;
+    // std::cout << "Estimated precision in bits: " << result->GetLogPrecision() << std::endl;
 
-    // Decrypt the result of scalar multiplication
-    cc->Decrypt(keys.secretKey, cScalar, &result);
-    result->SetLength(batchSize);
-    std::cout << "4 * x1 = " << result << std::endl;
+    // // Decrypt the result of addition
+    // cc->Decrypt(keys.secretKey, cAdd, &result);
+    // result->SetLength(batchSize);
+    // std::cout << "x1 + x2 = " << result;
+    // std::cout << "Estimated precision in bits: " << result->GetLogPrecision() << std::endl;
 
-    // Decrypt the result of multiplication
-    cc->Decrypt(keys.secretKey, cMul, &result);
-    result->SetLength(batchSize);
-    std::cout << "x1 * x2 = " << result << std::endl;
+    // // Decrypt the result of subtraction
+    // cc->Decrypt(keys.secretKey, cSub, &result);
+    // result->SetLength(batchSize);
+    // std::cout << "x1 - x2 = " << result << std::endl;
 
-    // Decrypt the result of rotations
+    // // Decrypt the result of scalar multiplication
+    // cc->Decrypt(keys.secretKey, cScalar, &result);
+    // result->SetLength(batchSize);
+    // std::cout << "4 * x1 = " << result << std::endl;
 
-    cc->Decrypt(keys.secretKey, cRot1, &result);
-    result->SetLength(batchSize);
-    std::cout << std::endl << "In rotations, very small outputs (~10^-10 here) correspond to 0's:" << std::endl;
-    std::cout << "x1 rotate by 1 = " << result << std::endl;
+    // // Decrypt the result of multiplication
+    // cc->Decrypt(keys.secretKey, cMul, &result);
+    // result->SetLength(batchSize);
+    // std::cout << "x1 * x2 = " << result << std::endl;
 
-    cc->Decrypt(keys.secretKey, cRot2, &result);
-    result->SetLength(batchSize);
-    std::cout << "x1 rotate by -2 = " << result << std::endl;
+    // // Decrypt the result of rotations
+
+    // cc->Decrypt(keys.secretKey, cRot1, &result);
+    // result->SetLength(batchSize);
+    // std::cout << std::endl << "In rotations, very small outputs (~10^-10 here) correspond to 0's:" << std::endl;
+    // std::cout << "x1 rotate by 1 = " << result << std::endl;
+
+    // cc->Decrypt(keys.secretKey, cRot2, &result);
+    // result->SetLength(batchSize);
+    // std::cout << "x1 rotate by -2 = " << result << std::endl;
 
     return 0;
 }
