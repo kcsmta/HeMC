@@ -58,5 +58,5 @@ endif()
 ### EXAMPLE:
 ### add_executable( test demo-simple-example.cpp )
 
-add_executable(verify-range range_verification.cpp utils.cpp)
-# add_executable(verify-sign sign_verification.cpp utils.cpp)
+# add_executable(verify-range range_verification.cpp utils.cpp)
+add_executable(verify-sign sign_verification.cpp utils.cpp)
